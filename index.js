@@ -1,34 +1,33 @@
-const StockSpanner = function () {
-  this.stockSpan = [];
-  return this;
-};
-
 /**
- * @param {number} price
+ * @param {string} s
  * @return {number}
  */
-StockSpanner.prototype.next = function (price) {
-  let count = 1;
+const minDeletions = (s) => {
+  let res = 0;
+  const frequency = new Map();
+  const used = new Set();
 
-  while (this.stockSpan.length > 0 && this.stockSpan[this.stockSpan.length - 1][0] <= price) {
-    count += this.stockSpan.pop()[1];
+  for (char of s)
+    frequency.set(char, frequency.has(char) ? frequency.get(char) + 1 : 1)
+
+  const iterator = frequency.values();
+
+  let currentIteration = iterator.next();
+
+  while (!currentIteration.done) {
+    while (used.has(currentIteration.value) && currentIteration.value > 0) {
+      currentIteration.value--;
+      res++;
+    }
+
+    used.add(currentIteration.value);
+    currentIteration = iterator.next();
   }
 
-  this.stockSpan.push([price, count]);
-
-  return count;
+  return res;
 };
 
-const stockSpanner = new StockSpanner();
-
-console.log(stockSpanner.next(100)); // return 1
-console.log(stockSpanner.next(80)); // return 1
-console.log(stockSpanner.next(60)); // return 1
-console.log(stockSpanner.next(70)); // return 2
-console.log(stockSpanner.next(60)); // return 1
-console.log(stockSpanner.next(75)); // return 4, because the last 4 prices (including today's price of 75) were less than or equal to today's price.
-console.log(stockSpanner.next(85)); // return 6
-console.log(stockSpanner.next(60)); // return 1
-console.log(stockSpanner.next(60)); // return 2
-console.log(stockSpanner.next(60)); // return 3
-console.log(stockSpanner.next(120)); // return 11 (total number of .next calls) as 120 is the highest value among all
+console.log(minDeletions("aab")); // expected output: 0
+console.log(minDeletions("aaabbbcc")); // expected output: 2
+console.log(minDeletions("ceabaacb")); // expected output: 2
+console.log(minDeletions("ceabaacbb")); // expected output: 3

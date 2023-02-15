@@ -1,37 +1,35 @@
-## My leetcode `901. Online Stock Span` solution
+## My leetcode `1647. Minimum Deletions to Make Character Frequencies Unique` solution
 
 ### Question
-Design an algorithm that collects daily price quotes for some stock and returns the span of that stock's price for the current day.
+A string `s` is called `good` if there are no two different characters in s that have the same frequency.
 
-The `span` of the stock's price in one day is the maximum number of consecutive days (starting from that day and going backward) for which the stock price was less than or equal to the price of that day.
+Given a string `s`, return the `minimum` number of characters you need to delete to make `s` good.
 
-* For example, if the prices of the stock in the last four days is `[7,2,1,2]` and the price of the stock today is `2`, then the span of today is `4` because starting from today, the price of the stock was less than or equal `2` for `4` consecutive days.
+The `frequency` of a character in a string is the number of times it appears in the string. For example, in the string `aab`, the frequency of `a` is `2`, while the frequency of `b` is `1`.
 
-* Also, if the prices of the stock in the last four days is `[7,34,1,2]` and the price of the stock today is `8`, then the span of today is `3` because starting from today, the price of the stock was less than or equal `8` for `3` consecutive days.
+Example 1:
+```
+Input: s = "aab"
+Output: 0
+Explanation: s is already good.
+```
 
-Implement the `StockSpanner` class:
+Example 2:
+```
+Input: s = "aaabbbcc"
+Output: 2
+Explanation: You can delete two 'b's resulting in the good string "aaabcc".
+Another way it to delete one 'b' and one 'c' resulting in the good string "aaabbc".
+```
 
-`StockSpanner()` Initializes the object of the class.
-`int next(int price)` Returns the span of the stock's price given that today's price is `price`.
-
-``` java
-Input
-["StockSpanner", "next", "next", "next", "next", "next", "next", "next"]
-[[], [100], [80], [60], [70], [60], [75], [85]]
-Output
-[null, 1, 1, 1, 2, 1, 4, 6]
-
-Explanation
-StockSpanner stockSpanner = new StockSpanner();
-stockSpanner.next(100); // return 1
-stockSpanner.next(80);  // return 1
-stockSpanner.next(60);  // return 1
-stockSpanner.next(70);  // return 2
-stockSpanner.next(60);  // return 1
-stockSpanner.next(75);  // return 4, because the last 4 prices (including today's price of 75) were less than or equal to today's price.
-stockSpanner.next(85);  // return 6
+Example 3:
+```
+Input: s = "ceabaacb"
+Output: 2
+Explanation: You can delete both 'c's resulting in the good string "eabaab".
+Note that we only care about characters that are still in the string at the end (i.e. frequency of 0 is ignored).
 ```
 
 Constraints:
-* `1 <= price <= 105`
-* At most `104` calls will be made to next.
+* `1 <= s.length <= 105`
+* `s` contains only lowercase English letters.
